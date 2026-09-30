@@ -1,0 +1,24 @@
+{
+  "corpus_key": "ci-constitution-2016-amendment-relationships",
+  "policy": "candidate_only_until_human_validation",
+  "relationships": [
+    {
+      "from_document_codo_id": "CODO-CI-LOI-CONSTITUTIONNELLE-2020-348",
+      "relation_type": "modifies",
+      "to_document_codo_id": "CODO-CI-CONSTITUTION-2016-886",
+      "effective_date": "2020-03-19",
+      "evidence_source_key": "CI-PRESIDENCE",
+      "evidence_url": "https://www.presidence.ci/wp-content/uploads/2020/03/COMMUNIQUE-DE-LA-PRESIDENCE-DE-LA-REPUBLIQUE-DU-19-MARS-2020.pdf",
+      "note": "Official Presidency communication identifies law 2020-348 of 19 March 2020 as modifying law 2016-886. Relationship remains a candidate until legal review."
+    },
+    {
+      "from_document_codo_id": "CODO-CI-LOI-CONSTITUTIONNELLE-2023-693",
+      "relation_type": "modifies",
+      "to_document_codo_id": "CODO-CI-CONSTITUTION-2016-886",
+      "effective_date": "2023-07-25",
+      "evidence_source_key": "CI-PRESIDENCE",
+      "evidence_url": "https://www.presidence.ci/wp-content/uploads/2025/06/Constitution-livret-ok.pdf",
+      "note": "Official consolidated Constitution identifies constitutional law 2023-693 of 25 July 2023 as an amendment. Relationship remains a candidate until legal review."
+    }
+  ]
+}

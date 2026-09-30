@@ -1,0 +1,52 @@
+{
+  "corpus_key": "ci-constitution-2016-consolidated-2023",
+  "publication_policy": "human_review_required",
+  "primary_source": {
+    "source_key": "CI-PRESIDENCE",
+    "source_url": "https://www.presidence.ci/wp-content/uploads/2025/06/Constitution-livret-ok.pdf",
+    "provenance_role": "primary_text"
+  },
+  "document_metadata": {
+    "codo_id": "CODO-CI-CONSTITUTION-2016-886",
+    "domain_slug": "droit-constitutionnel",
+    "nature": "constitution",
+    "title": "Constitution de la République de Côte d’Ivoire - loi n° 2016-886 du 8 novembre 2016, telle que modifiée",
+    "document_number": "2016-886",
+    "authority_name": "Présidence de la République de Côte d’Ivoire",
+    "adoption_date": "2016-11-08",
+    "publication_date": null,
+    "version_key": "2016-886+2020-348+2023-693",
+    "valid_from": null,
+    "valid_to": null
+  },
+  "declared_amendments_to_verify": [
+    {
+      "number": "2020-348",
+      "date": "2020-03-19",
+      "relation": "amends"
+    },
+    {
+      "number": "2023-693",
+      "date": "2023-07-25",
+      "relation": "amends"
+    }
+  ],
+  "verification_sources": [
+    {
+      "source_key": "CI-CONSEIL-CONSTITUTIONNEL",
+      "url": "https://www.conseil-constitutionnel.ci/lois-et-decrets/la-constitution",
+      "role": "institutional_verification"
+    },
+    {
+      "source_key": "CI-CONSEIL-CONSTITUTIONNEL",
+      "url": "https://www.conseil-constitutionnel.ci/sites/default/files/decision_2023.007_du_04.08.2023.pdf",
+      "role": "amendment_verification"
+    }
+  ],
+  "notes": [
+    "Ce manifeste n'est pas une publication juridique et ne contient aucun texte normatif recopié.",
+    "L'acquisition doit réussir depuis la source officielle et produire un hash avant extraction.",
+    "Le brouillon généré reste verification_pending jusqu'à décision juridique humaine.",
+    "La date d'effet de la version consolidée doit être vérifiée avant validation; elle n'est pas inférée du nom du fichier ni de sa date de mise en ligne."
+  ]
+}

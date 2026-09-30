@@ -1,0 +1,55 @@
+services:
+  db:
+    image: pgvector/pgvector:pg18
+    environment:
+      POSTGRES_DB: codo
+      POSTGRES_USER: codo
+      POSTGRES_PASSWORD: ${CODO_POSTGRES_PASSWORD:?set CODO_POSTGRES_PASSWORD}
+    volumes:
+      - codo_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U codo -d codo"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      CODO_DATABASE_URL: postgresql://codo:${CODO_POSTGRES_PASSWORD}@db:5432/codo
+      CODO_STORAGE_DIR: /app/storage
+      CODO_PUBLIC_MAX_RESULTS: ${CODO_PUBLIC_MAX_RESULTS:-20}
+      CODO_ADMIN_BOOTSTRAP_TOKEN: ${CODO_ADMIN_BOOTSTRAP_TOKEN:-}
+      CODO_OIDC_ISSUER: ${CODO_OIDC_ISSUER:-}
+      CODO_OIDC_AUDIENCE: ${CODO_OIDC_AUDIENCE:-}
+      CODO_OIDC_ALGORITHMS: ${CODO_OIDC_ALGORITHMS:-RS256}
+      CODO_OIDC_CACHE_SECONDS: ${CODO_OIDC_CACHE_SECONDS:-300}
+      CODO_OIDC_CLOCK_SKEW_SECONDS: ${CODO_OIDC_CLOCK_SKEW_SECONDS:-30}
+      CODO_OIDC_HTTP_TIMEOUT_SECONDS: ${CODO_OIDC_HTTP_TIMEOUT_SECONDS:-5}
+      CODO_OIDC_ALLOW_INSECURE_HTTP: ${CODO_OIDC_ALLOW_INSECURE_HTTP:-false}
+      CODO_EMBEDDING_URL: ${CODO_EMBEDDING_URL:-}
+      CODO_EMBEDDING_API_KEY: ${CODO_EMBEDDING_API_KEY:-}
+      CODO_EMBEDDING_MODEL: ${CODO_EMBEDDING_MODEL:-}
+      CODO_LLM_URL: ${CODO_LLM_URL:-}
+      CODO_LLM_API_KEY: ${CODO_LLM_API_KEY:-}
+      CODO_LLM_MODEL: ${CODO_LLM_MODEL:-}
+    volumes:
+      - codo_storage:/app/storage
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/live', timeout=3).read()"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  codo_postgres:
+  codo_storage:
