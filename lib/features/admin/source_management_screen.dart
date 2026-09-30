@@ -14,7 +14,7 @@ class SourceManagementScreen extends StatelessWidget {
       ('D', 'Source documentaire non vérifiée'),
     ];
     return Scaffold(
-      appBar: AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: const CodoLogo(compact: true)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
         children: [

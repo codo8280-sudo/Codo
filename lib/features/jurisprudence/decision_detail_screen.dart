@@ -10,7 +10,7 @@ class DecisionDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     const labels = ['Juridiction', 'Formation', 'Date', 'Numéro', 'Matière', 'Textes cités', 'Faits', 'Question juridique', 'Décision', 'Source'];
     return Scaffold(
-      appBar: AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: const CodoLogo(compact: true)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
         children: [

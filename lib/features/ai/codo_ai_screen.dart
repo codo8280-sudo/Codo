@@ -56,7 +56,7 @@ class _CodoAiScreenState extends State<CodoAiScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: const CodoLogo(compact: true)),
       body: Column(
         children: [
           Expanded(
@@ -68,7 +68,7 @@ class _CodoAiScreenState extends State<CodoAiScreen> {
                 Text('CODO analyse une question uniquement après recherche dans le corpus juridique vérifié.', style: Theme.of(context).textTheme.bodySmall),
                 const SizedBox(height: 16),
                 DropdownButtonFormField<CodoAnswerMode>(
-                  value: mode,
+                  initialValue: mode,
                   decoration: const InputDecoration(labelText: 'Niveau de réponse'),
                   items: CodoAnswerMode.values
                       .map((value) => DropdownMenuItem(value: value, child: Text(value.label)))
