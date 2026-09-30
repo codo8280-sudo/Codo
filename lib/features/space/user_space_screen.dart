@@ -20,7 +20,7 @@ class UserSpaceScreen extends StatelessWidget {
       ('Back-office juridique', Icons.admin_panel_settings_outlined, CodoRoutes.admin),
     ];
     return Scaffold(
-      appBar: AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: const CodoLogo(compact: true)),
       body: AnimatedBuilder(
         animation: services.auth,
         builder: (context, _) => ListView(

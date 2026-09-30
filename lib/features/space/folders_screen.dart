@@ -109,7 +109,7 @@ class _FoldersScreenState extends State<FoldersScreen> {
   Widget build(BuildContext context) {
     final services = CodoServicesScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: const CodoLogo(compact: true)),
       floatingActionButton: services.auth.isSignedIn
           ? FloatingActionButton.extended(
               onPressed: _createFolder,

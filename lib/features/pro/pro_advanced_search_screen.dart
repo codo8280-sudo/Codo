@@ -10,7 +10,7 @@ class ProAdvancedSearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     const filters = ['Nature', 'Numéro', 'Date', 'Domaine', 'Statut', 'Institution', 'Juridiction', 'Texte cité'];
     return Scaffold(
-      appBar: AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: const CodoLogo(compact: true)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
         children: [

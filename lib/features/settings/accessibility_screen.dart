@@ -75,7 +75,7 @@ class _AccessibilityScreenState extends State<AccessibilityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: const CodoLogo(compact: true)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
         children: [
