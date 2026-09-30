@@ -14,7 +14,7 @@ class OnboardingScreen extends StatelessWidget {
       ('Agir', 'Suivez les étapes documentées d’une procédure et identifiez l’autorité concernée.', Icons.route_outlined),
     ];
     return Scaffold(
-      appBar: const AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: CodoLogo(compact: true)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
         children: [

@@ -126,7 +126,7 @@ class _AlertsScreenState extends State<AlertsScreen> {
   Widget build(BuildContext context) {
     final services = CodoServicesScope.of(context);
     return Scaffold(
-      appBar: const AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: CodoLogo(compact: true)),
       floatingActionButton: services.auth.isSignedIn
           ? FloatingActionButton.extended(
               onPressed: _createAlert,

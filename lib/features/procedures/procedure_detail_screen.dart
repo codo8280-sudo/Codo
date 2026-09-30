@@ -19,7 +19,7 @@ class ProcedureDetailScreen extends StatelessWidget {
       'Exercer un recours si applicable',
     ];
     return Scaffold(
-      appBar: const AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: CodoLogo(compact: true)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
         children: [

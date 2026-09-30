@@ -53,7 +53,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   Widget build(BuildContext context) {
     final services = CodoServicesScope.of(context);
     return Scaffold(
-      appBar: const AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: CodoLogo(compact: true)),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
