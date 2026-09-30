@@ -1,0 +1,3046 @@
+openapi: 3.1.0
+info:
+  title: CODO API
+  description: Source-first legal information API for Côte d'Ivoire.
+  version: 0.8.0
+paths:
+  /health:
+    get:
+      tags:
+      - health
+      summary: Health
+      operationId: health_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Health Health Get
+  /health/live:
+    get:
+      tags:
+      - health
+      summary: Live
+      operationId: live_health_live_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Live Health Live Get
+  /health/ready:
+    get:
+      tags:
+      - health
+      summary: Ready
+      operationId: ready_health_ready_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Ready Health Ready Get
+  /v1/search:
+    get:
+      tags:
+      - search
+      summary: Search
+      operationId: search_v1_search_get
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+          minLength: 2
+          maxLength: 1000
+          title: Q
+      - name: limit
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+            maximum: 100
+            minimum: 1
+          - type: 'null'
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/documents/{codo_id}:
+    get:
+      tags:
+      - legal-corpus
+      summary: Document
+      operationId: document_v1_documents__codo_id__get
+      parameters:
+      - name: codo_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Codo Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Document V1 Documents  Codo Id  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/documents/{codo_id}/provenance:
+    get:
+      tags:
+      - legal-corpus
+      summary: Document Provenance
+      operationId: document_provenance_v1_documents__codo_id__provenance_get
+      parameters:
+      - name: codo_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Codo Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentProvenanceOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/documents/{codo_id}/publication-receipt:
+    get:
+      tags:
+      - legal-corpus
+      summary: Document Publication Receipt
+      operationId: document_publication_receipt_v1_documents__codo_id__publication_receipt_get
+      parameters:
+      - name: codo_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Codo Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicationReceiptOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/articles/{codo_id}:
+    get:
+      tags:
+      - legal-corpus
+      summary: Article
+      operationId: article_v1_articles__codo_id__get
+      parameters:
+      - name: codo_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Codo Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Article V1 Articles  Codo Id  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/articles/{codo_id}/versions:
+    get:
+      tags:
+      - legal-corpus
+      summary: Article Versions
+      operationId: article_versions_v1_articles__codo_id__versions_get
+      parameters:
+      - name: codo_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Codo Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Article Versions V1 Articles  Codo Id  Versions Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/ai/answer:
+    post:
+      tags:
+      - codo-ai
+      summary: Answer
+      operationId: answer_v1_ai_answer_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnswerRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodoAnswerOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/me:
+    get:
+      tags:
+      - admin-auth
+      summary: Me
+      operationId: me_v1_admin_me_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminPrincipalOut'
+      security:
+      - HTTPBearer: []
+  /v1/admin/memberships:
+    get:
+      tags:
+      - admin-auth
+      summary: Memberships
+      operationId: memberships_v1_admin_memberships_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: auth_subject
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            maxLength: 512
+          - type: 'null'
+          title: Auth Subject
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdminMembershipOut'
+                title: Response Memberships V1 Admin Memberships Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - admin-auth
+      summary: Grant Membership
+      operationId: grant_membership_v1_admin_memberships_post
+      security:
+      - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminMembershipGrantIn'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminMembershipOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/memberships/{auth_subject}/{role_key}:
+    delete:
+      tags:
+      - admin-auth
+      summary: Revoke Membership
+      operationId: revoke_membership_v1_admin_memberships__auth_subject___role_key__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: auth_subject
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Auth Subject
+      - name: role_key
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Role Key
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminMembershipOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/ingestion/acquire:
+    post:
+      tags:
+      - admin-ingestion
+      summary: Acquire
+      operationId: acquire_v1_admin_ingestion_acquire_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcquisitionRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcquisitionResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/admin/ingestion/acquire-file:
+    post:
+      tags:
+      - admin-ingestion
+      summary: Acquire File
+      operationId: acquire_file_v1_admin_ingestion_acquire_file_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: source_key
+        in: query
+        required: true
+        schema:
+          type: string
+          minLength: 2
+          maxLength: 120
+          title: Source Key
+      - name: source_url
+        in: query
+        required: true
+        schema:
+          type: string
+          minLength: 8
+          maxLength: 2000
+          title: Source Url
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcquisitionResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/ingestion/{job_id}/extract:
+    post:
+      tags:
+      - admin-ingestion
+      summary: Extract
+      operationId: extract_v1_admin_ingestion__job_id__extract_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Job Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/ingestion/{job_id}/draft:
+    post:
+      tags:
+      - admin-ingestion
+      summary: Draft
+      operationId: draft_v1_admin_ingestion__job_id__draft_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Job Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DraftMetadataIn'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DraftResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/ingestion/{job_id}:
+    get:
+      tags:
+      - admin-workflow
+      summary: Job Status
+      operationId: job_status_v1_admin_ingestion__job_id__get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Job Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngestionJobOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/ingestion/{job_id}/quality:
+    get:
+      tags:
+      - admin-workflow
+      summary: Quality
+      operationId: quality_v1_admin_ingestion__job_id__quality_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Job Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QualityReportResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/ingestion/{job_id}/structure:
+    post:
+      tags:
+      - admin-workflow
+      summary: Structure
+      operationId: structure_v1_admin_ingestion__job_id__structure_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Job Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StructuredDocumentIn'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StructureResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/ingestion/{job_id}/legal-decision:
+    post:
+      tags:
+      - admin-workflow
+      summary: Legal Decision
+      operationId: legal_decision_v1_admin_ingestion__job_id__legal_decision_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Job Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LegalDecisionRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegalDecisionResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/ingestion/{job_id}/transition:
+    post:
+      tags:
+      - admin-workflow
+      summary: Transition
+      operationId: transition_v1_admin_ingestion__job_id__transition_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Job Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowTransitionRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowTransitionResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/relationships:
+    get:
+      tags:
+      - admin-relationships
+      summary: List Candidates
+      operationId: list_candidates_v1_admin_relationships_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            pattern: ^(pending|validated|rejected)$
+          - type: 'null'
+          title: Status
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RelationshipCandidateOut'
+                title: Response List Candidates V1 Admin Relationships Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - admin-relationships
+      summary: Create Candidate
+      operationId: create_candidate_v1_admin_relationships_post
+      security:
+      - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelationshipCandidateIn'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelationshipCandidateOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/admin/relationships/{candidate_id}/review:
+    post:
+      tags:
+      - admin-relationships
+      summary: Review Candidate
+      operationId: review_candidate_v1_admin_relationships__candidate_id__review_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: candidate_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Candidate Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelationshipCandidateReviewIn'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelationshipCandidateOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/legal/documents/{codo_id}/relationships:
+    get:
+      tags:
+      - legal-relationships
+      summary: Document Relationships
+      operationId: document_relationships_v1_legal_documents__codo_id__relationships_get
+      parameters:
+      - name: codo_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Codo Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegalRelationshipsResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/me:
+    get:
+      tags:
+      - user-account
+      summary: Profile
+      operationId: profile_v1_me_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileOut'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - user-account
+      summary: Delete Profile
+      operationId: delete_profile_v1_me_delete
+      responses:
+        '204':
+          description: Successful Response
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - user-account
+      summary: Update Profile
+      operationId: update_profile_v1_me_patch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfileUpdateIn'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/me/accessibility:
+    get:
+      tags:
+      - user-account
+      summary: Accessibility
+      operationId: accessibility_v1_me_accessibility_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessibilitySettingsOut'
+      security:
+      - HTTPBearer: []
+    put:
+      tags:
+      - user-account
+      summary: Update Accessibility
+      operationId: update_accessibility_v1_me_accessibility_put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessibilitySettingsIn'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessibilitySettingsOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/me/favorites:
+    get:
+      tags:
+      - user-account
+      summary: Favorites
+      operationId: favorites_v1_me_favorites_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FavoriteOut'
+                type: array
+                title: Response Favorites V1 Me Favorites Get
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - user-account
+      summary: Add Favorite
+      operationId: add_favorite_v1_me_favorites_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FavoriteIn'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavoriteOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/me/favorites/{favorite_id}:
+    delete:
+      tags:
+      - user-account
+      summary: Delete Favorite
+      operationId: delete_favorite_v1_me_favorites__favorite_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: favorite_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Favorite Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/me/folders:
+    get:
+      tags:
+      - user-account
+      summary: Folders
+      operationId: folders_v1_me_folders_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserFolderOut'
+                type: array
+                title: Response Folders V1 Me Folders Get
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - user-account
+      summary: Create Folder
+      operationId: create_folder_v1_me_folders_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserFolderCreateIn'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserFolderOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/me/folders/{folder_id}:
+    delete:
+      tags:
+      - user-account
+      summary: Delete Folder
+      operationId: delete_folder_v1_me_folders__folder_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: folder_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Folder Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/me/folders/{folder_id}/items:
+    get:
+      tags:
+      - user-account
+      summary: Folder Items
+      operationId: folder_items_v1_me_folders__folder_id__items_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: folder_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Folder Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserFolderItemOut'
+                title: Response Folder Items V1 Me Folders  Folder Id  Items Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - user-account
+      summary: Add Folder Item
+      operationId: add_folder_item_v1_me_folders__folder_id__items_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: folder_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Folder Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserFolderItemIn'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserFolderItemOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/me/folders/{folder_id}/items/{item_id}:
+    delete:
+      tags:
+      - user-account
+      summary: Delete Folder Item
+      operationId: delete_folder_item_v1_me_folders__folder_id__items__item_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: folder_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Folder Id
+      - name: item_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Item Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/me/alerts:
+    get:
+      tags:
+      - user-account
+      summary: Alerts
+      operationId: alerts_v1_me_alerts_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserAlertOut'
+                type: array
+                title: Response Alerts V1 Me Alerts Get
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - user-account
+      summary: Create Alert
+      operationId: create_alert_v1_me_alerts_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAlertCreateIn'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAlertOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v1/me/alerts/{alert_id}:
+    patch:
+      tags:
+      - user-account
+      summary: Update Alert
+      operationId: update_alert_v1_me_alerts__alert_id__patch
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: alert_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Alert Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAlertUpdateIn'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAlertOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - user-account
+      summary: Delete Alert
+      operationId: delete_alert_v1_me_alerts__alert_id__delete
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: alert_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Alert Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /:
+    get:
+      summary: Root
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Root  Get
+components:
+  schemas:
+    AccessibilitySettingsIn:
+      properties:
+        text_scale:
+          type: number
+          maximum: 1.8
+          minimum: 0.8
+          title: Text Scale
+          default: 1.0
+        high_contrast:
+          type: boolean
+          title: High Contrast
+          default: false
+        reduce_motion:
+          type: boolean
+          title: Reduce Motion
+          default: false
+        offline_cache_enabled:
+          type: boolean
+          title: Offline Cache Enabled
+          default: false
+      type: object
+      title: AccessibilitySettingsIn
+    AccessibilitySettingsOut:
+      properties:
+        text_scale:
+          type: number
+          maximum: 1.8
+          minimum: 0.8
+          title: Text Scale
+          default: 1.0
+        high_contrast:
+          type: boolean
+          title: High Contrast
+          default: false
+        reduce_motion:
+          type: boolean
+          title: Reduce Motion
+          default: false
+        offline_cache_enabled:
+          type: boolean
+          title: Offline Cache Enabled
+          default: false
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - updated_at
+      title: AccessibilitySettingsOut
+    AcquisitionRequest:
+      properties:
+        source_key:
+          type: string
+          maxLength: 120
+          minLength: 2
+          title: Source Key
+        source_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Source Url
+      type: object
+      required:
+      - source_key
+      - source_url
+      title: AcquisitionRequest
+    AcquisitionResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        source_key:
+          type: string
+          title: Source Key
+        source_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Source Url
+        final_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Final Url
+        content_hash:
+          type: string
+          title: Content Hash
+        byte_size:
+          type: integer
+          title: Byte Size
+        mime_type:
+          type: string
+          title: Mime Type
+        status:
+          type: string
+          title: Status
+        storage_uri:
+          type: string
+          title: Storage Uri
+      type: object
+      required:
+      - job_id
+      - source_key
+      - source_url
+      - final_url
+      - content_hash
+      - byte_size
+      - mime_type
+      - status
+      - storage_uri
+      title: AcquisitionResponse
+    AdminMembershipGrantIn:
+      properties:
+        auth_subject:
+          type: string
+          maxLength: 512
+          minLength: 1
+          title: Auth Subject
+        role_key:
+          type: string
+          enum:
+          - SUPER_ADMIN
+          - RESPONSABLE_JURIDIQUE
+          - VALIDATEUR_JURIDIQUE
+          - DOCUMENTALISTE
+          - REDACTEUR
+          - DATA_MANAGER
+          - MODERATEUR
+          - AUDITEUR
+          title: Role Key
+      type: object
+      required:
+      - auth_subject
+      - role_key
+      title: AdminMembershipGrantIn
+    AdminMembershipOut:
+      properties:
+        auth_subject:
+          type: string
+          title: Auth Subject
+        role_key:
+          type: string
+          enum:
+          - SUPER_ADMIN
+          - RESPONSABLE_JURIDIQUE
+          - VALIDATEUR_JURIDIQUE
+          - DOCUMENTALISTE
+          - REDACTEUR
+          - DATA_MANAGER
+          - MODERATEUR
+          - AUDITEUR
+          title: Role Key
+        active:
+          type: boolean
+          title: Active
+        granted_at:
+          type: string
+          format: date-time
+          title: Granted At
+        granted_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Granted By
+      type: object
+      required:
+      - auth_subject
+      - role_key
+      - active
+      - granted_at
+      title: AdminMembershipOut
+    AdminPrincipalOut:
+      properties:
+        subject:
+          type: string
+          title: Subject
+        roles:
+          items:
+            type: string
+            enum:
+            - SUPER_ADMIN
+            - RESPONSABLE_JURIDIQUE
+            - VALIDATEUR_JURIDIQUE
+            - DOCUMENTALISTE
+            - REDACTEUR
+            - DATA_MANAGER
+            - MODERATEUR
+            - AUDITEUR
+          type: array
+          title: Roles
+        authentication_method:
+          type: string
+          enum:
+          - oidc
+          - bootstrap
+          title: Authentication Method
+      type: object
+      required:
+      - subject
+      - roles
+      - authentication_method
+      title: AdminPrincipalOut
+    AnswerRequest:
+      properties:
+        question:
+          type: string
+          maxLength: 4000
+          minLength: 2
+          title: Question
+        mode:
+          type: string
+          enum:
+          - simple
+          - detailed
+          - legal
+          - professional
+          title: Mode
+          default: simple
+      type: object
+      required:
+      - question
+      title: AnswerRequest
+    CitationOut:
+      properties:
+        source_id:
+          type: string
+          title: Source Id
+        document_id:
+          type: string
+          title: Document Id
+        article_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Article Id
+        version:
+          type: string
+          title: Version
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+        source_url:
+          anyOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          - type: 'null'
+          title: Source Url
+        trust_level:
+          anyOf:
+          - type: string
+            enum:
+            - A
+            - B
+            - C
+          - type: 'null'
+          title: Trust Level
+      type: object
+      required:
+      - source_id
+      - document_id
+      - version
+      title: CitationOut
+    CodoAnswerOut:
+      properties:
+        situation:
+          type: string
+          title: Situation
+        law_summary:
+          type: string
+          title: Law Summary
+        next_steps:
+          items:
+            type: string
+          type: array
+          title: Next Steps
+        documents_needed:
+          items:
+            type: string
+          type: array
+          title: Documents Needed
+        where_to_act:
+          items:
+            type: string
+          type: array
+          title: Where To Act
+        deadlines:
+          items:
+            type: string
+          type: array
+          title: Deadlines
+        attention_points:
+          items:
+            type: string
+          type: array
+          title: Attention Points
+        citations:
+          items:
+            $ref: '#/components/schemas/CitationOut'
+          type: array
+          title: Citations
+        has_sufficient_verified_sources:
+          type: boolean
+          title: Has Sufficient Verified Sources
+        answer_mode:
+          type: string
+          title: Answer Mode
+          default: simple
+      type: object
+      required:
+      - situation
+      - law_summary
+      - has_sufficient_verified_sources
+      title: CodoAnswerOut
+    DocumentProvenanceOut:
+      properties:
+        document_id:
+          type: string
+          title: Document Id
+        version_key:
+          type: string
+          title: Version Key
+        sources:
+          items:
+            $ref: '#/components/schemas/ProvenanceSourceOut'
+          type: array
+          title: Sources
+      type: object
+      required:
+      - document_id
+      - version_key
+      - sources
+      title: DocumentProvenanceOut
+    DraftDiagnosticsOut:
+      properties:
+        article_count:
+          type: integer
+          title: Article Count
+        duplicate_labels:
+          items:
+            type: string
+          type: array
+          title: Duplicate Labels
+        numeric_gaps:
+          items:
+            type: integer
+          type: array
+          title: Numeric Gaps
+        first_article_number:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: First Article Number
+        last_article_number:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Last Article Number
+        warnings:
+          items:
+            type: string
+          type: array
+          title: Warnings
+      type: object
+      required:
+      - article_count
+      title: DraftDiagnosticsOut
+    DraftMetadataIn:
+      properties:
+        codo_id:
+          type: string
+          maxLength: 180
+          minLength: 4
+          title: Codo Id
+        domain_slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Domain Slug
+        nature:
+          type: string
+          maxLength: 120
+          minLength: 1
+          title: Nature
+        title:
+          type: string
+          minLength: 1
+          title: Title
+        document_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Document Number
+        authority_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Authority Name
+        adoption_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Adoption Date
+        publication_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Publication Date
+        version_key:
+          type: string
+          maxLength: 180
+          minLength: 1
+          title: Version Key
+        valid_from:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Valid From
+        valid_to:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Valid To
+      type: object
+      required:
+      - codo_id
+      - nature
+      - title
+      - version_key
+      title: DraftMetadataIn
+    DraftResponse:
+      properties:
+        package:
+          $ref: '#/components/schemas/StructuredDocumentIn'
+        diagnostics:
+          $ref: '#/components/schemas/DraftDiagnosticsOut'
+      type: object
+      required:
+      - package
+      - diagnostics
+      title: DraftResponse
+    ExtractionResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        text_path:
+          type: string
+          title: Text Path
+        content_hash:
+          type: string
+          title: Content Hash
+        page_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Page Count
+        char_count:
+          type: integer
+          title: Char Count
+        status:
+          type: string
+          const: to_analyze
+          title: Status
+          default: to_analyze
+      type: object
+      required:
+      - job_id
+      - text_path
+      - content_hash
+      - char_count
+      title: ExtractionResponse
+    FavoriteIn:
+      properties:
+        entity_type:
+          type: string
+          enum:
+          - document
+          - article
+          - procedure
+          - institution
+          - case_law
+          title: Entity Type
+        entity_key:
+          type: string
+          maxLength: 240
+          minLength: 1
+          title: Entity Key
+      type: object
+      required:
+      - entity_type
+      - entity_key
+      title: FavoriteIn
+    FavoriteOut:
+      properties:
+        id:
+          type: integer
+          title: Id
+        entity_type:
+          type: string
+          enum:
+          - document
+          - article
+          - procedure
+          - institution
+          - case_law
+          title: Entity Type
+        entity_key:
+          type: string
+          title: Entity Key
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      type: object
+      required:
+      - id
+      - entity_type
+      - entity_key
+      - created_at
+      title: FavoriteOut
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    IngestionArtifactOut:
+      properties:
+        artifact_type:
+          type: string
+          title: Artifact Type
+        storage_uri:
+          type: string
+          title: Storage Uri
+        content_hash:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content Hash
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      type: object
+      required:
+      - artifact_type
+      - storage_uri
+      - created_at
+      title: IngestionArtifactOut
+    IngestionEventOut:
+      properties:
+        from_status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: From Status
+        to_status:
+          type: string
+          title: To Status
+        actor_subject:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Actor Subject
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+        occurred_at:
+          type: string
+          format: date-time
+          title: Occurred At
+      type: object
+      required:
+      - to_status
+      - occurred_at
+      title: IngestionEventOut
+    IngestionJobOut:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        source_key:
+          type: string
+          title: Source Key
+        source_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Source Url
+        final_url:
+          anyOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          - type: 'null'
+          title: Final Url
+        status:
+          type: string
+          title: Status
+        content_hash:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content Hash
+        mime_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mime Type
+        byte_size:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Byte Size
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        artifacts:
+          items:
+            $ref: '#/components/schemas/IngestionArtifactOut'
+          type: array
+          title: Artifacts
+        events:
+          items:
+            $ref: '#/components/schemas/IngestionEventOut'
+          type: array
+          title: Events
+      type: object
+      required:
+      - job_id
+      - source_key
+      - source_url
+      - status
+      - created_at
+      - updated_at
+      title: IngestionJobOut
+    LegalArticleOut:
+      properties:
+        codo_id:
+          type: string
+          title: Codo Id
+        document_id:
+          type: string
+          title: Document Id
+        label:
+          type: string
+          title: Label
+        official_text:
+          type: string
+          title: Official Text
+        status:
+          type: string
+          enum:
+          - in_force
+          - partially_in_force
+          - amended
+          - repealed
+          - replaced
+          - suspended
+          - bill
+          - draft_decree
+          - adopted_awaiting_publication
+          - historical
+          - verification_pending
+          title: Status
+        version:
+          type: string
+          title: Version
+        source:
+          $ref: '#/components/schemas/LegalSourceOut'
+        explanation_codo:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Explanation Codo
+        short_summary:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Short Summary
+        valid_from:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Valid From
+        valid_to:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Valid To
+      type: object
+      required:
+      - codo_id
+      - document_id
+      - label
+      - official_text
+      - status
+      - version
+      - source
+      title: LegalArticleOut
+    LegalDecisionRequest:
+      properties:
+        document_status:
+          type: string
+          enum:
+          - in_force
+          - partially_in_force
+          - amended
+          - repealed
+          - replaced
+          - suspended
+          - bill
+          - draft_decree
+          - adopted_awaiting_publication
+          - historical
+          title: Document Status
+        article_default_status:
+          anyOf:
+          - type: string
+            enum:
+            - in_force
+            - partially_in_force
+            - amended
+            - repealed
+            - replaced
+            - suspended
+            - bill
+            - draft_decree
+            - adopted_awaiting_publication
+            - historical
+          - type: 'null'
+          title: Article Default Status
+        article_statuses:
+          additionalProperties:
+            type: string
+            enum:
+            - in_force
+            - partially_in_force
+            - amended
+            - repealed
+            - replaced
+            - suspended
+            - bill
+            - draft_decree
+            - adopted_awaiting_publication
+            - historical
+          type: object
+          title: Article Statuses
+        valid_from:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Valid From
+        note:
+          anyOf:
+          - type: string
+            maxLength: 2000
+          - type: 'null'
+          title: Note
+      type: object
+      required:
+      - document_status
+      title: LegalDecisionRequest
+    LegalDecisionResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        document_status:
+          type: string
+          enum:
+          - in_force
+          - partially_in_force
+          - amended
+          - repealed
+          - replaced
+          - suspended
+          - bill
+          - draft_decree
+          - adopted_awaiting_publication
+          - historical
+          title: Document Status
+        article_version_count:
+          type: integer
+          title: Article Version Count
+        status:
+          type: string
+          title: Status
+      type: object
+      required:
+      - job_id
+      - document_status
+      - article_version_count
+      - status
+      title: LegalDecisionResponse
+    LegalDocumentOut:
+      properties:
+        codo_id:
+          type: string
+          title: Codo Id
+        title:
+          type: string
+          title: Title
+        nature:
+          type: string
+          title: Nature
+        number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Number
+        status:
+          type: string
+          enum:
+          - in_force
+          - partially_in_force
+          - amended
+          - repealed
+          - replaced
+          - suspended
+          - bill
+          - draft_decree
+          - adopted_awaiting_publication
+          - historical
+          - verification_pending
+          title: Status
+        source:
+          $ref: '#/components/schemas/LegalSourceOut'
+        adoption_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Adoption Date
+        publication_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Publication Date
+        effective_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Effective Date
+        current_version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Current Version
+        authority_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Authority Name
+      type: object
+      required:
+      - codo_id
+      - title
+      - nature
+      - status
+      - source
+      title: LegalDocumentOut
+    LegalRelationshipOut:
+      properties:
+        id:
+          type: integer
+          title: Id
+        from_document_codo_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: From Document Codo Id
+        from_article_codo_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: From Article Codo Id
+        relation_type:
+          type: string
+          title: Relation Type
+        to_document_codo_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: To Document Codo Id
+        to_article_codo_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: To Article Codo Id
+        effective_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Effective Date
+        evidence_source_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Evidence Source Key
+        evidence_source_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Evidence Source Name
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+      type: object
+      required:
+      - id
+      - relation_type
+      title: LegalRelationshipOut
+    LegalRelationshipsResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/LegalRelationshipOut'
+          type: array
+          title: Items
+      type: object
+      required:
+      - items
+      title: LegalRelationshipsResponse
+    LegalSourceOut:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        institution_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Institution Name
+        trust_level:
+          type: string
+          enum:
+          - A
+          - B
+          - C
+          - D
+          title: Trust Level
+        url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Url
+        is_official:
+          type: boolean
+          title: Is Official
+        probative_note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Probative Note
+        verified_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Verified At
+      type: object
+      required:
+      - id
+      - name
+      - trust_level
+      - url
+      - is_official
+      title: LegalSourceOut
+    ProvenanceSourceOut:
+      properties:
+        source_id:
+          type: string
+          title: Source Id
+        source_name:
+          type: string
+          title: Source Name
+        institution_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Institution Name
+        trust_level:
+          type: string
+          enum:
+          - A
+          - B
+          - C
+          title: Trust Level
+        provenance_role:
+          type: string
+          enum:
+          - primary_text
+          - amendment
+          - verification
+          - historical_reference
+          title: Provenance Role
+        source_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Source Url
+        final_url:
+          anyOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          - type: 'null'
+          title: Final Url
+        captured_at:
+          type: string
+          format: date-time
+          title: Captured At
+        content_hash:
+          type: string
+          title: Content Hash
+        verified_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Verified At
+        note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Note
+      type: object
+      required:
+      - source_id
+      - source_name
+      - trust_level
+      - provenance_role
+      - source_url
+      - captured_at
+      - content_hash
+      title: ProvenanceSourceOut
+    PublicationReceiptOut:
+      properties:
+        document_id:
+          type: string
+          title: Document Id
+        version_key:
+          type: string
+          title: Version Key
+        publication_hash:
+          type: string
+          maxLength: 64
+          minLength: 64
+          title: Publication Hash
+        source_snapshot_hash:
+          type: string
+          maxLength: 64
+          minLength: 64
+          title: Source Snapshot Hash
+        published_at:
+          type: string
+          format: date-time
+          title: Published At
+      type: object
+      required:
+      - document_id
+      - version_key
+      - publication_hash
+      - source_snapshot_hash
+      - published_at
+      title: PublicationReceiptOut
+    QualityCheckOut:
+      properties:
+        key:
+          type: string
+          title: Key
+        passed:
+          type: boolean
+          title: Passed
+        blocking:
+          type: boolean
+          title: Blocking
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - key
+      - passed
+      - blocking
+      - detail
+      title: QualityCheckOut
+    QualityReportResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        workflow_status:
+          type: string
+          title: Workflow Status
+        can_validate:
+          type: boolean
+          title: Can Validate
+        can_publish:
+          type: boolean
+          title: Can Publish
+        checks:
+          items:
+            $ref: '#/components/schemas/QualityCheckOut'
+          type: array
+          title: Checks
+      type: object
+      required:
+      - job_id
+      - workflow_status
+      - can_validate
+      - can_publish
+      - checks
+      title: QualityReportResponse
+    RelationshipCandidateIn:
+      properties:
+        from_document_codo_id:
+          type: string
+          maxLength: 180
+          minLength: 4
+          title: From Document Codo Id
+        relation_type:
+          type: string
+          enum:
+          - modifies
+          - repeals
+          - replaces
+          - implements
+          - complements
+          - cites
+          title: Relation Type
+        to_document_codo_id:
+          type: string
+          maxLength: 180
+          minLength: 4
+          title: To Document Codo Id
+        effective_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Effective Date
+        evidence_source_key:
+          type: string
+          maxLength: 120
+          minLength: 2
+          title: Evidence Source Key
+        evidence_url:
+          anyOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          - type: 'null'
+          title: Evidence Url
+        note:
+          anyOf:
+          - type: string
+            maxLength: 4000
+          - type: 'null'
+          title: Note
+      type: object
+      required:
+      - from_document_codo_id
+      - relation_type
+      - to_document_codo_id
+      - evidence_source_key
+      title: RelationshipCandidateIn
+    RelationshipCandidateOut:
+      properties:
+        id:
+          type: string
+          title: Id
+        from_document_codo_id:
+          type: string
+          title: From Document Codo Id
+        relation_type:
+          type: string
+          enum:
+          - modifies
+          - repeals
+          - replaces
+          - implements
+          - complements
+          - cites
+          title: Relation Type
+        to_document_codo_id:
+          type: string
+          title: To Document Codo Id
+        effective_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Effective Date
+        evidence_source_key:
+          type: string
+          title: Evidence Source Key
+        evidence_url:
+          anyOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          - type: 'null'
+          title: Evidence Url
+        status:
+          type: string
+          enum:
+          - pending
+          - validated
+          - rejected
+          title: Status
+        created_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        reviewed_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reviewed By
+        reviewed_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Reviewed At
+        review_note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Review Note
+        relationship_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Relationship Id
+      type: object
+      required:
+      - id
+      - from_document_codo_id
+      - relation_type
+      - to_document_codo_id
+      - evidence_source_key
+      - status
+      - created_at
+      title: RelationshipCandidateOut
+    RelationshipCandidateReviewIn:
+      properties:
+        approved:
+          type: boolean
+          title: Approved
+        note:
+          anyOf:
+          - type: string
+            maxLength: 4000
+          - type: 'null'
+          title: Note
+      type: object
+      required:
+      - approved
+      title: RelationshipCandidateReviewIn
+    SearchResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/SearchResultOut'
+          type: array
+          title: Results
+        semantic_search_used:
+          type: boolean
+          title: Semantic Search Used
+          default: false
+      type: object
+      required:
+      - results
+      title: SearchResponse
+    SearchResultOut:
+      properties:
+        document:
+          $ref: '#/components/schemas/LegalDocumentOut'
+        article:
+          anyOf:
+          - $ref: '#/components/schemas/LegalArticleOut'
+          - type: 'null'
+        snippet:
+          type: string
+          title: Snippet
+        score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Score
+        retrieval_kind:
+          type: string
+          enum:
+          - lexical
+          - semantic
+          - hybrid
+          title: Retrieval Kind
+          default: lexical
+      type: object
+      required:
+      - document
+      - snippet
+      title: SearchResultOut
+    StructureResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        document_codo_id:
+          type: string
+          title: Document Codo Id
+        document_version_id:
+          type: integer
+          title: Document Version Id
+        article_version_count:
+          type: integer
+          title: Article Version Count
+        status:
+          type: string
+          title: Status
+      type: object
+      required:
+      - job_id
+      - document_codo_id
+      - document_version_id
+      - article_version_count
+      - status
+      title: StructureResponse
+    StructuredArticleIn:
+      properties:
+        codo_id:
+          type: string
+          maxLength: 180
+          minLength: 4
+          title: Codo Id
+        label:
+          type: string
+          maxLength: 180
+          minLength: 1
+          title: Label
+        official_text:
+          type: string
+          minLength: 1
+          title: Official Text
+        status:
+          type: string
+          enum:
+          - in_force
+          - partially_in_force
+          - amended
+          - repealed
+          - replaced
+          - suspended
+          - bill
+          - draft_decree
+          - adopted_awaiting_publication
+          - historical
+          - verification_pending
+          title: Status
+        valid_from:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Valid From
+        valid_to:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Valid To
+        explanation_codo:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Explanation Codo
+        short_summary:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Short Summary
+        sort_order:
+          type: integer
+          title: Sort Order
+          default: 0
+      type: object
+      required:
+      - codo_id
+      - label
+      - official_text
+      - status
+      title: StructuredArticleIn
+    StructuredDocumentIn:
+      properties:
+        source_snapshot_hash:
+          type: string
+          maxLength: 64
+          minLength: 64
+          title: Source Snapshot Hash
+        codo_id:
+          type: string
+          maxLength: 180
+          minLength: 4
+          title: Codo Id
+        domain_slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Domain Slug
+        nature:
+          type: string
+          maxLength: 120
+          minLength: 1
+          title: Nature
+        title:
+          type: string
+          minLength: 1
+          title: Title
+        document_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Document Number
+        status:
+          type: string
+          enum:
+          - in_force
+          - partially_in_force
+          - amended
+          - repealed
+          - replaced
+          - suspended
+          - bill
+          - draft_decree
+          - adopted_awaiting_publication
+          - historical
+          - verification_pending
+          title: Status
+        authority_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Authority Name
+        adoption_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Adoption Date
+        publication_date:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Publication Date
+        version_key:
+          type: string
+          maxLength: 180
+          minLength: 1
+          title: Version Key
+        valid_from:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Valid From
+        valid_to:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Valid To
+        official_text:
+          type: string
+          minLength: 1
+          title: Official Text
+        articles:
+          items:
+            $ref: '#/components/schemas/StructuredArticleIn'
+          type: array
+          title: Articles
+      type: object
+      required:
+      - source_snapshot_hash
+      - codo_id
+      - nature
+      - title
+      - status
+      - version_key
+      - official_text
+      title: StructuredDocumentIn
+    UserAlertCreateIn:
+      properties:
+        scope_type:
+          type: string
+          enum:
+          - domain
+          - document
+          - article
+          - topic
+          title: Scope Type
+        scope_key:
+          type: string
+          maxLength: 240
+          minLength: 1
+          title: Scope Key
+      type: object
+      required:
+      - scope_type
+      - scope_key
+      title: UserAlertCreateIn
+    UserAlertOut:
+      properties:
+        id:
+          type: string
+          title: Id
+        scope_type:
+          type: string
+          enum:
+          - domain
+          - document
+          - article
+          - topic
+          title: Scope Type
+        scope_key:
+          type: string
+          title: Scope Key
+        enabled:
+          type: boolean
+          title: Enabled
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      type: object
+      required:
+      - id
+      - scope_type
+      - scope_key
+      - enabled
+      - created_at
+      title: UserAlertOut
+    UserAlertUpdateIn:
+      properties:
+        enabled:
+          type: boolean
+          title: Enabled
+      type: object
+      required:
+      - enabled
+      title: UserAlertUpdateIn
+    UserFolderCreateIn:
+      properties:
+        name:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Name
+        description:
+          anyOf:
+          - type: string
+            maxLength: 1000
+          - type: 'null'
+          title: Description
+      type: object
+      required:
+      - name
+      title: UserFolderCreateIn
+    UserFolderItemIn:
+      properties:
+        entity_type:
+          type: string
+          enum:
+          - document
+          - article
+          - procedure
+          - institution
+          - case_law
+          - search
+          title: Entity Type
+        entity_key:
+          type: string
+          maxLength: 240
+          minLength: 1
+          title: Entity Key
+      type: object
+      required:
+      - entity_type
+      - entity_key
+      title: UserFolderItemIn
+    UserFolderItemOut:
+      properties:
+        id:
+          type: integer
+          title: Id
+        entity_type:
+          type: string
+          enum:
+          - document
+          - article
+          - procedure
+          - institution
+          - case_law
+          - search
+          title: Entity Type
+        entity_key:
+          type: string
+          title: Entity Key
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      type: object
+      required:
+      - id
+      - entity_type
+      - entity_key
+      - created_at
+      title: UserFolderItemOut
+    UserFolderOut:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        item_count:
+          type: integer
+          title: Item Count
+          default: 0
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - name
+      - created_at
+      - updated_at
+      title: UserFolderOut
+    UserProfileOut:
+      properties:
+        id:
+          type: string
+          title: Id
+        auth_subject:
+          type: string
+          title: Auth Subject
+        auth_issuer:
+          type: string
+          title: Auth Issuer
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+        email_verified:
+          type: boolean
+          title: Email Verified
+          default: false
+        locale:
+          type: string
+          title: Locale
+          default: fr-CI
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        last_login_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Login At
+      type: object
+      required:
+      - id
+      - auth_subject
+      - auth_issuer
+      - created_at
+      - updated_at
+      title: UserProfileOut
+    UserProfileUpdateIn:
+      properties:
+        display_name:
+          anyOf:
+          - type: string
+            maxLength: 240
+            minLength: 1
+          - type: 'null'
+          title: Display Name
+        locale:
+          anyOf:
+          - type: string
+            maxLength: 32
+            minLength: 2
+          - type: 'null'
+          title: Locale
+      type: object
+      title: UserProfileUpdateIn
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    WorkflowTransitionRequest:
+      properties:
+        target_status:
+          type: string
+          enum:
+          - to_analyze
+          - structured
+          - sources_verified
+          - legal_review
+          - validated
+          - published
+          - monitored
+          title: Target Status
+        note:
+          anyOf:
+          - type: string
+            maxLength: 2000
+          - type: 'null'
+          title: Note
+      type: object
+      required:
+      - target_status
+      title: WorkflowTransitionRequest
+    WorkflowTransitionResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        previous_status:
+          type: string
+          title: Previous Status
+        status:
+          type: string
+          title: Status
+      type: object
+      required:
+      - job_id
+      - previous_status
+      - status
+      title: WorkflowTransitionResponse
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

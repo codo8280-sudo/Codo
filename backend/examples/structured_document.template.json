@@ -1,0 +1,29 @@
+{
+  "source_snapshot_hash": "<64-character SHA-256 from the acquisition job>",
+  "codo_id": "<stable CODO document identifier>",
+  "domain_slug": "<existing legal domain slug or null>",
+  "nature": "<law/decree/code/uniform-act/...>",
+  "title": "<title transcribed from the verified source>",
+  "document_number": null,
+  "status": "verification_pending",
+  "authority_name": null,
+  "adoption_date": null,
+  "publication_date": null,
+  "version_key": "<stable source-backed version key>",
+  "valid_from": null,
+  "valid_to": null,
+  "official_text": "<exact extracted official text; do not paraphrase>",
+  "articles": [
+    {
+      "codo_id": "<stable CODO article identifier>",
+      "label": "<article label exactly as sourced>",
+      "official_text": "<exact article text>",
+      "status": "verification_pending",
+      "valid_from": null,
+      "valid_to": null,
+      "explanation_codo": null,
+      "short_summary": null,
+      "sort_order": 1
+    }
+  ]
+}

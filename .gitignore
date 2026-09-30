@@ -1,0 +1,17 @@
+.dart_tool/
+.packages
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.idea/
+.vscode/
+.DS_Store
+*.iml
+.env
+.env.*
+!.env.example
+
+__pycache__/
+*.py[cod]
+*.tmp

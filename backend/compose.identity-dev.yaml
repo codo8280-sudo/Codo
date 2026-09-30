@@ -1,0 +1,17 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.4
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${CODO_KEYCLOAK_ADMIN:?set CODO_KEYCLOAK_ADMIN}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${CODO_KEYCLOAK_ADMIN_PASSWORD:?set CODO_KEYCLOAK_ADMIN_PASSWORD}
+      KC_HEALTH_ENABLED: "true"
+    volumes:
+      - ./keycloak/codo-realm.json:/opt/keycloak/data/import/codo-realm.json:ro
+      - codo_keycloak_data:/opt/keycloak/data
+    ports:
+      - "127.0.0.1:8081:8080"
+    restart: unless-stopped
+
+volumes:
+  codo_keycloak_data:
