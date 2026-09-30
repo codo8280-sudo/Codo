@@ -27,13 +27,23 @@ Never reuse unrelated application databases for CODO.
 
 ## Connection model
 
-For a long-lived FastAPI container, use a direct PostgreSQL connection when IPv6 is available. If the runtime network is IPv4-only, use the Supabase shared pooler in session mode. Keep migrations on a session/direct connection, not transaction pooling.
+For a long-lived FastAPI container, use a direct PostgreSQL connection when IPv6 is available. GitHub Actions and other IPv4-only runtimes should use the Supabase Session pooler.
+
+Verified staging Session pooler parameters:
+
+```text
+host=aws-0-eu-west-2.pooler.supabase.com
+port=5432
+user=postgres.evchtqxpthfaekpaeibh
+database=postgres
+sslmode=require
+```
 
 Runtime configuration:
 
 ```text
 CODO_DATABASE_PROVIDER=supabase
-CODO_DATABASE_URL=postgresql://...
+CODO_DATABASE_URL=postgresql://postgres.evchtqxpthfaekpaeibh:<password>@aws-0-eu-west-2.pooler.supabase.com:5432/postgres?sslmode=require
 ```
 
 Do not expose the database password, access tokens, service-role keys or a connection string in Flutter or in Git.
@@ -68,6 +78,21 @@ The staging migration ledger stores the filename and SHA-256 of every applied re
 - pgvector-in-`public` warning resolved.
 
 Supabase may still report `RLS enabled, no policy` as informational. This is intentional for the current architecture because no direct Data API access is granted to CODO tables.
+
+## OAuth 2.1 / OpenID Connect staging
+
+Supabase Auth exposes an OAuth 2.1 / OpenID Connect server capability, but it is currently **disabled** on `Codo_Staging`.
+
+The enablement screen currently requires:
+
+- a real Site URL;
+- an authorization/consent path (default shown: `/oauth/consent`);
+- an implemented consent UI at that path;
+- optional dynamic OAuth app registration.
+
+The current Site URL is still `http://localhost:3000`. CODO must therefore not enable the OAuth server yet.
+
+Before activation, the staging application must provide a real HTTPS authorization UI and then confirm creation of a **Public** mobile client using Authorization Code + PKCE, no client secret, and the CODO mobile redirect URI.
 
 ## Provider preflight
 
