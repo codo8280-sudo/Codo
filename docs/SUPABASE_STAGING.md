@@ -94,6 +94,17 @@ The current Site URL is still `http://localhost:3000`. CODO must therefore not e
 
 Before activation, the staging application must provide a real HTTPS authorization UI and then confirm creation of a **Public** mobile client using Authorization Code + PKCE, no client secret, and the CODO mobile redirect URI.
 
+Verified OIDC metadata for staging:
+
+```text
+issuer=https://evchtqxpthfaekpaeibh.supabase.co/auth/v1
+audience=authenticated
+active_jwks_signing_algorithm=ES256
+mobile_redirect_uri=ci.codo.app:/oauthredirect
+```
+
+The discovery document advertises several signing algorithms, but the active public JWKS currently exposes an EC/ES256 signing key. The CODO staging backend therefore uses an explicit `ES256` allowlist.
+
 ## Provider preflight
 
 Run after migrations:

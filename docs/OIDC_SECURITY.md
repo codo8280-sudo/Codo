@@ -11,11 +11,23 @@ CODO distingue deux niveaux :
 
 ## Configuration serveur
 
+Configuration générique :
+
 ```text
 CODO_OIDC_ISSUER=https://identity.example/realms/codo
 CODO_OIDC_AUDIENCE=codo-api
 CODO_OIDC_ALGORITHMS=RS256
 ```
+
+Configuration vérifiée de `Codo_Staging` :
+
+```text
+CODO_OIDC_ISSUER=https://evchtqxpthfaekpaeibh.supabase.co/auth/v1
+CODO_OIDC_AUDIENCE=authenticated
+CODO_OIDC_ALGORITHMS=ES256
+```
+
+Le document de discovery staging annonce `RS256`, `HS256` et `ES256`, mais le JWKS actif expose actuellement une clé de signature `EC/ES256`. CODO limite donc volontairement le staging à `ES256` au lieu d'accepter tous les algorithmes annoncés.
 
 L'API contrôle :
 
