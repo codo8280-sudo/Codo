@@ -25,7 +25,15 @@ jobs:
           tmp_dir="$(mktemp -d)"
           unzip -q Codo.zip -d "$tmp_dir"
 
-          rsync -a             --include='.env.example'             --exclude='.env*'             --exclude='__pycache__/'             --exclude='*.pyc'             --exclude='*.pyo'             --exclude='*.tmp'             "$tmp_dir/Codo/codo_app/" ./
+          rsync -a \
+            --include='.env.example' \
+            --exclude='.env*' \
+            --exclude='.github/workflows/' \
+            --exclude='__pycache__/' \
+            --exclude='*.pyc' \
+            --exclude='*.pyo' \
+            --exclude='*.tmp' \
+            "$tmp_dir/Codo/codo_app/" ./
 
           rm -f Codo.zip
           find . -type d -name '__pycache__' -prune -exec rm -rf {} +
@@ -60,8 +68,6 @@ jobs:
 
           commit;
           SQL
-
-          rm -f .github/workflows/bootstrap-source.yml
 
       - name: Verify no environment secrets are staged
         shell: bash
