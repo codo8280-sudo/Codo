@@ -1,0 +1,78 @@
+name: CODO staging release gate
+
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: Database provider
+        required: true
+        default: postgres
+        type: choice
+        options:
+          - postgres
+          - supabase
+      document_id:
+        description: Optional published CODO document id for corpus-chain E2E
+        required: false
+        type: string
+      require_published_document:
+        description: Require provenance, receipt and relationships for document_id
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+env:
+  CODO_DATABASE_URL: ${{ secrets.CODO_DATABASE_URL }}
+  CODO_DATABASE_PROVIDER: ${{ inputs.provider }}
+  CODO_OIDC_ISSUER: ${{ secrets.CODO_OIDC_ISSUER }}
+  CODO_OIDC_AUDIENCE: ${{ secrets.CODO_OIDC_AUDIENCE }}
+  CODO_OIDC_ALGORITHMS: RS256
+  CODO_E2E_USER_TOKEN: ${{ secrets.CODO_E2E_USER_TOKEN }}
+  CODO_E2E_ADMIN_TOKEN: ${{ secrets.CODO_E2E_ADMIN_TOKEN }}
+
+jobs:
+  release-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: staging
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: backend/requirements-dev.txt
+
+      - name: Install backend dependencies
+        run: python -m pip install -r backend/requirements-dev.txt
+
+      - name: Execute staging release gate
+        env:
+          CODO_API_BASE_URL: ${{ secrets.CODO_API_BASE_URL }}
+          CODO_DOCUMENT_ID: ${{ inputs.document_id }}
+          CODO_REQUIRE_DOCUMENT: ${{ inputs.require_published_document }}
+        run: |
+          set -eu
+          args="--release-label increment-08 --environment staging --provider $CODO_DATABASE_PROVIDER --api-base $CODO_API_BASE_URL"
+          if [ -n "$CODO_DOCUMENT_ID" ]; then
+            args="$args --document-id $CODO_DOCUMENT_ID"
+          fi
+          if [ "$CODO_REQUIRE_DOCUMENT" = "true" ]; then
+            args="$args --require-published-document"
+          fi
+          PYTHONPATH=backend python backend/scripts/staging_release.py $args --report staging-release-report.json
+
+      - name: Upload release report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codo-staging-release-report
+          path: staging-release-report.json
+          if-no-files-found: warn
+          retention-days: 30
