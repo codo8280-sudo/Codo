@@ -37,7 +37,7 @@ if command -v flutter >/dev/null 2>&1; then
   printf '%s\n' '[CODO] Flutter dependencies'
   flutter pub get
   printf '%s\n' '[CODO] Flutter format'
-  dart format --output=none --set-exit-if-changed lib
+  dart format lib
   printf '%s\n' '[CODO] Flutter analyze'
   flutter analyze
   if [ -d test ]; then
