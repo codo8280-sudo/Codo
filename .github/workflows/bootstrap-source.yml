@@ -1,0 +1,83 @@
+name: Bootstrap CODO source tree
+
+on:
+  push:
+    branches:
+      - chore/bootstrap-codo-source
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: chore/bootstrap-codo-source
+
+      - name: Extract prepared source safely
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp_dir="$(mktemp -d)"
+          unzip -q Codo.zip -d "$tmp_dir"
+
+          rsync -a             --include='.env.example'             --exclude='.env*'             --exclude='__pycache__/'             --exclude='*.pyc'             --exclude='*.pyo'             --exclude='*.tmp'             "$tmp_dir/Codo/codo_app/" ./
+
+          rm -f Codo.zip
+          find . -type d -name '__pycache__' -prune -exec rm -rf {} +
+          find . -type f \( -name '*.pyc' -o -name '*.pyo' -o -name '*.tmp' \) -delete
+
+          grep -qxF '__pycache__/' .gitignore || printf '\n__pycache__/\n' >> .gitignore
+          grep -qxF '*.py[cod]' .gitignore || printf '*.py[cod]\n' >> .gitignore
+          grep -qxF '*.tmp' .gitignore || printf '*.tmp\n' >> .gitignore
+
+          cat > backend/postgres/011_supabase_security_followup.sql <<'SQL'
+          begin;
+
+          alter function public.codo_refresh_document_search_text() set search_path = pg_catalog, public;
+          alter function public.codo_refresh_article_search_text() set search_path = pg_catalog, public;
+          alter function public.codo_refresh_chunk_search_text() set search_path = pg_catalog, public;
+
+          do $$
+          begin
+            if exists (
+              select 1
+              from pg_extension e
+              join pg_namespace n on n.oid = e.extnamespace
+              where e.extname = 'vector'
+                and n.nspname = 'public'
+                and e.extrelocatable
+            ) then
+              create schema if not exists extensions;
+              alter extension vector set schema extensions;
+            end if;
+          end
+          $$;
+
+          commit;
+          SQL
+
+          rm -f .github/workflows/bootstrap-source.yml
+
+      - name: Verify no environment secrets are staged
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find . -type f \( -name '.env' -o -name '.env.local' -o -name '.env.staging' -o -name '.env.production' \) -print -quit | grep -q .; then
+            echo "Refusing to commit environment secret files."
+            exit 1
+          fi
+
+      - name: Commit normalized source tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Bootstrap CODO source tree from prepared archive"
+          git push origin HEAD:chore/bootstrap-codo-source
