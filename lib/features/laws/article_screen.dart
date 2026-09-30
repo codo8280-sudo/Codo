@@ -87,7 +87,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: CodoLogo(compact: true)),
       body: loading
           ? const Padding(padding: EdgeInsets.all(20), child: LinearProgressIndicator())
           : ListView(

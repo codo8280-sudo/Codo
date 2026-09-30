@@ -8,7 +8,7 @@ class VersionManagementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: const AppBar(title: CodoLogo(compact: true)),
+        appBar: AppBar(title: CodoLogo(compact: true)),
         body: ListView(padding: const EdgeInsets.all(20), children: [
           Text('Gestion des versions', style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: 8),

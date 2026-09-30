@@ -56,7 +56,7 @@ class _CodoAiScreenState extends State<CodoAiScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: CodoLogo(compact: true)),
       body: Column(
         children: [
           Expanded(

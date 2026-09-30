@@ -10,7 +10,7 @@ class LegalValidationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     const checks = ['Source identifiée', 'Document original conservé', 'Numéro vérifié', 'Date vérifiée', 'Version vérifiée', 'Statut vérifié', 'Texte complet', 'Relations de modification vérifiées', 'Citations IA testées', 'Historique enregistré'];
     return Scaffold(
-      appBar: const AppBar(title: CodoLogo(compact: true)),
+      appBar: AppBar(title: CodoLogo(compact: true)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
         children: [
