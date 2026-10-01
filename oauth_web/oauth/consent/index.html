@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src https://evchtqxpthfaekpaeibh.supabase.co; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
+  <title>CODO — Autorisation</title>
+  <link rel="stylesheet" href="../../assets/app.css">
+  <script defer src="../../assets/consent.js"></script>
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="auth-context" aria-labelledby="context-title">
+      <div class="brand-lockup"><span class="brand-mark">CODO</span><span class="env-pill">STAGING</span></div>
+      <p class="eyebrow">Centre d’Orientation du Droit et des Obligations</p>
+      <h1 id="context-title">Votre identité reste séparée de vos droits d’accès CODO.</h1>
+      <p class="lead">Supabase Auth prouve votre identité. Les rôles juridiques et administratifs sont attribués uniquement dans CODO.</p>
+      <div class="principle-card">
+        <span class="principle-index">01</span>
+        <div><strong>Identité vérifiée</strong><p>Connexion chiffrée et jetons signés.</p></div>
+      </div>
+      <div class="principle-card">
+        <span class="principle-index">02</span>
+        <div><strong>Consentement explicite</strong><p>Vous voyez précisément les informations demandées.</p></div>
+      </div>
+      <div class="principle-card">
+        <span class="principle-index">03</span>
+        <div><strong>Autorisation locale</strong><p>Les rôles CODO ne proviennent jamais du fournisseur d’identité.</p></div>
+      </div>
+    </section>
+
+    <section class="auth-panel" aria-live="polite">
+      <div id="loading-view" class="panel-card">
+        <div class="spinner" aria-hidden="true"></div>
+        <h2>Vérification de la demande</h2>
+        <p>Contrôle de la session et de la requête OAuth…</p>
+      </div>
+
+      <div id="login-view" class="panel-card hidden">
+        <p class="section-kicker">Connexion sécurisée</p>
+        <h2>Accéder à CODO</h2>
+        <p class="panel-intro">Connectez-vous au compte autorisé pour examiner cette demande.</p>
+        <label for="email">Adresse e-mail</label>
+        <input id="email" type="email" inputmode="email" autocomplete="username" spellcheck="false" required>
+        <label for="password">Mot de passe</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+        <button id="login-button" class="button button-primary" type="button">Se connecter</button>
+        <p id="login-error" class="message message-error hidden" role="alert"></p>
+        <p class="fineprint">Aucun mot de passe n’est enregistré par cette page. La session est conservée uniquement pour cet onglet.</p>
+      </div>
+
+      <div id="consent-view" class="panel-card hidden">
+        <div class="panel-header">
+          <div>
+            <p class="section-kicker">Demande d’autorisation</p>
+            <h2 id="client-name">Application CODO</h2>
+          </div>
+          <span class="verified-badge">Client enregistré</span>
+        </div>
+        <p class="panel-intro">Cette application demande l’autorisation d’utiliser certaines informations de votre compte.</p>
+
+        <dl class="detail-grid">
+          <div><dt>Compte</dt><dd id="user-email">—</dd></div>
+          <div><dt>Destination</dt><dd id="redirect-uri">—</dd></div>
+        </dl>
+
+        <div class="permissions-block">
+          <h3>Informations demandées</h3>
+          <ul id="scope-list" class="scope-list"></ul>
+        </div>
+
+        <div class="notice">
+          <strong>Important</strong>
+          <p>Ces permissions concernent l’identité OpenID Connect. Elles ne donnent pas directement accès aux tables juridiques CODO.</p>
+        </div>
+
+        <div class="button-row">
+          <button id="deny-button" class="button button-secondary" type="button">Refuser</button>
+          <button id="approve-button" class="button button-primary" type="button">Autoriser</button>
+        </div>
+        <button id="logout-button" class="text-button" type="button">Se déconnecter de cet onglet</button>
+        <p id="consent-error" class="message message-error hidden" role="alert"></p>
+      </div>
+
+      <div id="error-view" class="panel-card hidden">
+        <p class="section-kicker">Demande interrompue</p>
+        <h2>Autorisation impossible</h2>
+        <p id="fatal-error" class="panel-intro">La demande ne peut pas être traitée.</p>
+        <button id="retry-button" class="button button-secondary" type="button">Réessayer</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

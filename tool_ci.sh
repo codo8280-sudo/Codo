@@ -13,7 +13,7 @@ PYTHONPATH=backend python -m pytest -q backend/tests
 printf '%s\n' '[CODO] OpenAPI snapshot'
 PYTHONPATH=backend python backend/scripts/check_openapi.py
 
-printf '%s\n' '[CODO] Dart relative import integrity'
+printf '%s\n' '[CODO] OAuth staging web contract'\npython backend/scripts/check_oauth_web.py\n\nprintf '%s\n' '[CODO] Dart relative import integrity'
 python - <<'PY'
 from pathlib import Path
 import re
